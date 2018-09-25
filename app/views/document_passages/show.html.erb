@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Document:</strong>
+  <%= @documentpassage.document_id %>
+</p>
+
+<p>
+  <strong>Passage:</strong>
+  <%= @documentpassage.passage_id %>
+</p>
+
+<%= link_to 'Edit', edit_documentpassage_path(@documentpassage) %> |
+<%= link_to 'Back', documentpassages_path %>

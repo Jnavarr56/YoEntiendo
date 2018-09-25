@@ -1,0 +1,11 @@
+<%= link_to('Logout', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure you want to log out? You will lose unsaved work.' }) %>
+<br>
+<br>
+<h1>Editing Annotation</h1>
+<br>
+
+
+
+<%= render 'form', annotation: @annotation %>
+
+<%= link_to 'Cancel', annotation_path(@annotation), data: { confirm: 'Are you sure you want to cancel? You will lose unsaved work.' }%> 

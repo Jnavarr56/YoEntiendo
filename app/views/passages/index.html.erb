@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<%= link_to "Dashboard", authenticated_root_path %> |
+<%= link_to('Annotations', annotations_path) %> |
+<%= link_to('Collaborate', passage_shares_path) %> |
+<%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+
+<br>
+<br>
+<br>
+<%= link_to 'Create a New Passage', new_passage_path %> 
+<br>
+
+
+<h1>Your Passages</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Created</th>
+      <th>Last Update</th>
+      <th>Updated By</th>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    <% @total_passages.each do |passage| %>
+      
+      <tr>
+        <td><%= passage.title %></td>
+
+        <% if @current_user.id === passage.user_id %>
+          <td><%= "You" %></td>
+        <% else %>
+          <td><%= @users_affilation[passage.id].email %></td>
+        <% end %>
+    
+        <td><%= passage.created_at.strftime("%m/%d/%Y %l:%M %P") %></td>
+        <td><%= @update_history[passage.id].created_at.strftime("%m/%d/%Y %l:%M %P") %></td>
+        
+        <% if @current_user.id === @users_affilation[passage.id].id %>
+          <td><%= "You" %></td>
+        <% else %>
+          <td><%= @users_affilation[passage.id].email %></td>
+        <% end %>
+
+      
+        <td><%= link_to 'Open', passage %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<br>
+
+
+
+<br>
+

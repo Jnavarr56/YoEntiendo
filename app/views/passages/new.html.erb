@@ -1,0 +1,17 @@
+<%= link_to('Logout', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure you want to log out? You will lose unsaved work.' }) %>
+
+
+<br>
+<br>
+<br>
+<br>
+
+<h1>New Passage</h1>
+
+<%= render 'form', passage: @passage %>
+
+<br>
+
+<%= link_to 'Cancel', passages_path, data: { confirm: 'Are you sure you want to cancel? You will lose unsaved work.' }%> 
+
+

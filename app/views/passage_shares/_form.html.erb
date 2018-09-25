@@ -1,0 +1,47 @@
+<%= form_with(model: passage_share, local: true) do |form| %>
+  <% if passage_share.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(passage_share.errors.count, "error") %> prohibited this passageshare from being saved:</h2>
+
+      <ul>
+      <% passage_share.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= hidden_field(:passage_share, :author_user_id, :value => @current_user.id) %>
+  </div>
+
+  <div class="field">
+    <%= hidden_field(:passage_share, :opened, :value => false) %>
+  </div>
+
+  <div class="field">
+    <%= form.label :passage_id %>
+    <%= collection_select :passage_share, :passage_id, @passages_belonging_to_current, :id, :title,  prompt: 'Select Passage' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :recieving_user_id %>
+    <%= collection_select :passage_share, :recieving_user_id, @users_except_current, :id, :email, prompt: 'Select User' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :message %>
+    <%= form.text_field :message %>
+  </div>
+
+  <div class="field">
+    <%= form.label :edit_privilege %>
+    <%= form.check_box :edit_privilege %>
+  </div>
+
+
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

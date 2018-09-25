@@ -1,0 +1,100 @@
+<p id="notice"><%= notice %></p>
+
+<%= link_to "Dashboard", authenticated_root_path %> |
+<%= link_to('Annotations', annotations_path) %> |
+<%= link_to('Passages', passages_path) %>  |
+<%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+
+<br>
+<br>
+<br>
+<h1>Collaboration</h1>
+<br>
+<br>
+
+<table>
+  <h3>Inbox</h3>
+  
+  <h5>All [<%= @passage_shares_recieved.length %>]</h5>
+  <h5>Unread [<%= @passage_shares_recieved_unread.length %>]</h5>
+  <h5>Read [<%= @passage_shares_recieved_read.length %>]</h5>
+  <thead> 
+    <tr>
+      <th>From</th>
+      <th>Passage</th>
+      <th>Editing Privilege?</th>
+      <th>At</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% if @passage_shares_recieved != nil %>
+
+      <% @passage_shares_recieved.each do |passageshare| %>
+          <% if passageshare.opened %>
+            <% inbox_row_class = "openedInboxRow" %>
+          <% else %>
+            <% inbox_row_class = "unopenedInboxRow" %>
+          <% end %>
+
+          <tr data-sent-share-link = <%= "/passage_shares/#{passageshare.id}" %> class = <%= inbox_row_class %>>
+            <td><%= @sending_to_me[passageshare.author_user_id].email %></td>
+            <td><%= link_to @passages_recieved[passageshare.passage_id].title, @passages_recieved[passageshare.passage_id] %></td>
+            <% if passageshare.edit_privilege %>
+              <td>Yes</td>
+            <% else %>
+              <td>No</td>  
+            <% end %>
+            <td><%= passageshare.created_at.strftime("%m/%d/%Y %l:%M %P") %></td>
+            <td><%=link_to 'Open', passage_share_path(passageshare) %></td>
+          </tr>
+        <% end %>
+
+    <% end %>
+  </tbody>
+</table>
+
+<table>
+  <h3>Outbox</h3>
+  <h5>All [<%= @passage_shares_sent.length %>]</h5>
+  <h5>Opened [<%= @passage_shares_sent_opened.length %>]</h5>
+  <h5>Unopened [<%= @passage_shares_sent_unopened.length %>]</h5>
+  <thead>
+    <tr>
+      <th>To</th>
+      <th>Passage</th>
+      <th>At</th>
+      <th>Granted Editing Privileges</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% if @passage_shares_sent != nil %>
+
+      <% @passage_shares_sent.each do |passageshare| %>
+        <% if passageshare.opened %>
+          <% sent_row_class = "openedSentRow" %>
+        <% else %>
+          <% sent_row_class = "unopenedSentRow" %>
+        <% end %>
+
+        <tr data-sent-share-link = <%= "/passage_shares/#{passageshare.id}" %>  class = <%= sent_row_class %>>
+          <td><%= @receiving_from_me[passageshare.recieving_user_id].email %></td>
+          <td><%=link_to @passages_sent[passageshare.passage_id].title, @passages_sent[passageshare.passage_id] %></td>
+          <td><%= passageshare.created_at.strftime("%m/%d/%Y %l:%M %P") %></td>
+          <% if passageshare.edit_privilege %>
+            <td> Yes </td>
+          <% else %>
+            <td> No </td>
+          <% end %>
+          <td><%=link_to 'View', passage_share_path(passageshare) %></td>
+        </tr>
+      <% end %>
+
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Send a Passage', new_passage_share_path %>

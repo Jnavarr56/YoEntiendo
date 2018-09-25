@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  passage_id: 1
+  original_spanish: MyString
+  annotation_content: MyString
+
+two:
+  passage_id: 1
+  original_spanish: MyString
+  annotation_content: MyString

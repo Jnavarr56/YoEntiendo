@@ -1,0 +1,72 @@
+<p id="notice"><%= notice %></p>
+
+<%= link_to 'Back', url_for(:back) %> |
+<%= link_to "Dashboard", authenticated_root_path %> |
+<%= link_to('Annotations', annotations_path) %> |
+<%= link_to('Collaborate', passage_shares_path) %> |
+<%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+
+<br>
+<br>
+<br>
+<br>
+<% if @has_editing_privilege %>
+  <%= link_to 'Open in Editor Mode', edit_passage_path(@passage) %> 
+<% end %>
+<br>
+
+
+<% if @passage.user_id == @current_user.id %>
+  <%= link_to 'Delete this Passage', @passage, method: :delete, data: { confirm: 'Are you sure want to delete this passage?' } %>
+<% end %>
+
+
+<h1><%= @passage.title %></h1>
+<% if @author.id == @current_user.id %>
+  <h3>by You</h3>
+<% else  %>
+  <h3>by <%= @author.email %> </h3>
+<% end  %>
+
+
+<p><%= @passage.content %></p>
+
+<table>
+  <h5>Update History</h5>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Date</th>
+      <th>Type</th>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @update_history.each_with_index do |update, index| %>
+        <tr data-update-track = <%= "/update_track/#{update.id}"  %>>
+          <% if @participating_users[update.id].id == @current_user.id %>
+            <td> You </td>
+          <% else %>
+            <td><%= @participating_users[update.id].email %></td>
+          <% end %>
+          <% if index == 0 %>
+            <td><%=  @time_since[update.id] %></td>
+          <% else %>
+            <td><%= update.created_at.strftime("%m/%d/%Y %l:%M %P") %></td>
+          <% end %>
+          <% if update.nature === "created passage" %>
+            <td><%= "Created" %></td>
+          <% else %>
+            <td><%= "Edited" %></td>
+          <% end %>
+          <td><%= link_to 'View Details', "/update_track/#{update.id}" %></td>
+        </tr>
+
+    <% end %>
+  </tbody>
+</table>
+
+
+
+

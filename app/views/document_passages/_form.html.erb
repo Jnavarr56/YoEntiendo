@@ -1,0 +1,27 @@
+<%= form_with(model: documentpassage, local: true) do |form| %>
+  <% if documentpassage.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(documentpassage.errors.count, "error") %> prohibited this documentpassage from being saved:</h2>
+
+      <ul>
+      <% documentpassage.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :document_id %>
+    <%= form.number_field :document_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :passage_id %>
+    <%= form.number_field :passage_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

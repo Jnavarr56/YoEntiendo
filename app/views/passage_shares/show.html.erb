@@ -1,0 +1,42 @@
+<p id="notice"><%= notice %></p>
+
+<%= link_to 'Back', url_for(:back) %> |
+<%= link_to "Dashboard", authenticated_root_path %> |
+<%= link_to('Annotations', annotations_path) %> |
+<%= link_to('Passages', passage_shares_path) %> |
+<%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+
+<% if @from_user.id == @current_user.id %>
+  <% sender = "You"%>
+<% else %>
+  <% sender = @from_user.email %>
+<% end %>
+<h4><%= "From: #{sender}" %></h4>
+
+<% if @to_user.id == @current_user.id %>
+  <% reciever = "You"%>
+<% else %>
+  <% reciever = @to_user.email %>
+<% end %>
+<h4><%= "To: #{reciever}" %></4>
+<h4>Sent at: <%= @passage_share.created_at.strftime("%m/%d/%Y %l:%M %P") %></h4>
+<h4>Passage: <%= link_to @shared_passage.title, @shared_passage %></h4>
+<h4>Message: </h4>
+<h5><%= @passage_share.message %></h5>
+
+<% if @passage_share.edit_privilege %>
+  <% privilege = "Edit and Read" %>
+<% else %>
+  <% privilege = "Read Only" %>
+<% end %>
+
+<h4>Privilege Granted: <%= privilege %></h4>
+
+<% if @from_user.id == @current_user.id %>
+  <%= link_to 'Edit', edit_passage_share_path(@passage_share) %> |
+<% end %>
+
+
+
+
+<%= link_to 'Back', passage_shares_path %>
