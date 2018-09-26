@@ -1,13 +1,39 @@
-<div id = "dashboard">
-    <div class = "dashboardRow1">
-        <div class = "dashboardSection"><%= link_to('Passages', passages_path) %></div>
-        <div class = "dashboardSection"><%= link_to('Annotations', annotations_path) %></div>
-    </div>    
-    <div class = "dashboardRow2">
-        <div class = "dashboardSection"><%= link_to('Annotations', annotations_path) %></div>
-        <div class = "dashboardSection"><%= link_to('Logout', destroy_user_session_path, method: :delete) %><div>
-    </div>
-</div>
+<nav id = "dashboardNav"> 
+  <div>
+  <%= link_to('Passages', passages_path) %> 
+  <h1>|</h1>
+  <%= link_to('Annotations', annotations_path) %>
+  <h1>|</h1>
+  <%= link_to "Collaborate [#{@inbox.length}]", passage_shares_path %>
+  <h1>|</h1>
+  </div>
+  <div>
+    <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+    <h1> | </h1>
+    <%= mail_to "yoentiendo@gmail.com", "Contact"%>
+  </div>
+</nav>
+
+<section id = "dashboardMain">
+    <h1>Welcome <%= @current_user.first_name %></h1>
+    <h2 class = "dashboardTime"></h2>
+    <h2 class = "dashboardTime"></h2>
+    <h2 class = "dashboardTime"></h2>
+    <h2 class = "dashboardTime"></h2>
+    <h2 class = "dashboardTime"></h2>
+    <h2 class = "dashboardTime"></h2>
+    <a href = "/user">
+        <div>
+            <h2>View Your Profile</h2>
+        </div>
+    </a>
+
+
+        
+</section>
+
+
+
 
 
 

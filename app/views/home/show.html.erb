@@ -1,0 +1,76 @@
+<nav id = "profileNav"> 
+  <div>
+  <%= link_to('Dashboard', "/") %> 
+  <h1>|</h1>
+  <%= link_to('Passages', passages_path) %> 
+  <h1>|</h1>
+  <%= link_to('Annotations', annotations_path) %>
+  <h1>|</h1>
+    <%= link_to "Collaborate [#{@inbox.length}]", passage_shares_path %>
+  <h1>|</h1>
+  </div>
+  <div>
+    <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+    <h1> | </h1>
+    <%= mail_to "yoentiendo@gmail.com", "Contact"%>
+  </div>
+</nav>
+
+<section id = "profileSection">
+    <h1>Account Information</h1>
+    <span><%= link_to  '[Edit Information]', edit_user_registration_path %> | <%= link_to '[Cancel Account]', cancel_user_registration_path, data: { confirm: "Are you sure?" }, method: :delete %> | <%= link_to '[Back]', "/" %></span>
+    <div class = "profileRow">    
+        <div>
+            <h3>First Name:</h3> 
+            <h3>Last Name:</h3>
+            <h3>Email: </h3>
+            <h3>User Since:</h3>
+        </div>
+        <div>
+        <h3><%= @current_user.first_name %></h3>
+        <h3><%= @current_user.last_name %></h3>
+        <h3><%= @current_user.email %></h3>
+        <h3><%= @current_user.created_at.strftime("%m/%d/%Y %l:%M %P") %></h3>
+        </div>
+    </div>
+
+
+    <div class = "profileRow">
+        <div>
+            <h3>Passages Authored:</h3>
+            <h3>Shares Sent:</h3>
+            <h3>Shares Recieved:</h3>
+            <h3>Annotations Created:</h3>
+            <h3>Total Updates Made:</h3>
+        </div>
+        <div>
+            <% if !@passages %>
+                <h3> 0 </h3> 
+            <% else  %>
+                <h3><%= @passages.length %></h3>
+            <% end %>
+            <% if !@passage_shares_sent %>
+                <h3><%= 0 %></h3>
+            <% else  %>
+                <h3><%= @passage_shares_sent.length %></h3>   
+            <% end %>
+            <% if !@passage_shares_recieved %>
+                <h3> 0 </h3>
+            <% else  %>
+                <h3><%= @passage_shares_recieved.length %></h3>   
+            <% end %>
+            <% if !@annotations %>
+                <h3> 0 </h3>
+            <% else  %>
+                <h3><%= @annotations.length %></h3>
+            <% end %>
+            <% if !@updates %>
+                <h3> 0 </h3>
+            <% else  %>
+                <h3><%= @updates.length %></h3>
+            <% end %>
+        </div>
+    </div>
+
+</section>
+

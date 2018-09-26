@@ -1,48 +1,65 @@
-<p id="notice"><%= notice %></p>
-
-
-<%= link_to "Dashboard", authenticated_root_path %> |
-<%= link_to('Passages', passages_path) %> |
-<%= link_to('Collaborate', passage_shares_path) %> |
-<%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+<nav id = "dashboardNav"> 
+  <div>
+  <%= link_to('Dashboard', "/") %> 
+  <h1>|</h1>
+  <%= link_to('Passages', passages_path) %> 
+  <h1>|</h1>
+  <%= link_to "Collaborate [#{PassageShare.where(["recieving_user_id = ? and opened = ?", @current_user.id, false]).length}]", passage_shares_path %>
+  </div>
+  
+  <div>
+    <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+    <h1> | </h1>
+    <%= mail_to "yoentiendo@gmail.com", "Contact"%>
+  </div>
+</nav>
 
 <br>
 <br>
 <br>
 <br>
 
-<h1>Your Annotations</h1>
+<div id = "headerHolderAnnotations">
+  <h1 id = "yourAnnotations">Your Annotations</h1>
+  <div>
+  <input id = "searchPassages2" placeholder = "search for annotations"> 
+  </div>
+</div>
 
-<table>
+<div id = "annotationsTableForList">
+<table id = "annotationsTableIndex">
+<input style = "display: none;"  class = "search" id = "searchPassages3" placeholder = "search for annotations"> 
   <thead>
     <tr>
-      <th>Passage</th>
-      <th>Original Text</th>
-      <th>Annotated English</th>
-      <th>Author</th>
+      <th class = "sort" data-sort = "title">Passage</th>
+      <th class = "sort" data-sort = "span">Original Text</th>
+      <th class = "sort" data-sort = "eng">Annotated English</th>
+      <th class = "sort" data-sort = "author">Author</th>
+      <th class = "sort" data-sort = "created">Created On</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
-  <tbody>
+  <tbody class = "list">
     <% @annotations.each do |annotation| %>
       <% if @annotation_authors[annotation.id].id == @current_user.id %>
-        <% row_class = "annotationByMe" %>
+        <% row_class = "annotationRow annotationByMe" %>
         <% creator = {:email => "You"} %>
       <% else %>
-        <% row_class = "annotationByCollaborator" %>
+        <% row_class = "annotationRow annotationByCollaborator" %>
         <% creator = @annotation_authors[annotation.id] %>
       <% end %>
-      <tr class = <%= row_class %> data-annotation-view = <%= "/annotations/#{annotation.id}"%>>
-        <td><%= @related_passages[annotation.id].title %></td>
-        <td><%= annotation.original_spanish %></td>
-        <td><%= annotation.annotation_content %></td>
-        <td><%= creator[:email] %></td>
-        <td><%= link_to 'Open', annotation %></td>
+      <tr class = "<%= row_class %>" data-annotation-link = <%= "/annotations/#{annotation.id}"%>>
+        <td class = "title"><%= @related_passages[annotation.id].title %></td>
+        <td class = "span"><%= annotation.original_spanish %></td>
+        <td class = "eng"><%=raw annotation.annotation_content %></td>
+        <td class = "auth"><%= creator[:email] %></td>
+        <td class = "created"><%= annotation.created_at.strftime("%m/%d/%Y %l:%M %P") %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+</div>
 
 <br>
 

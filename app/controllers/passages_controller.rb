@@ -43,7 +43,13 @@ class PassagesController < ApplicationController
   # GET /passages/1.json
   def show
 
-    
+    @all_annotation_string = ''
+    Annotation.where(passage_id: @passage.id).each do |annot|
+      @all_annotation_string = @all_annotation_string + "#{annot.element}@-@#{annot.original_spanish}@-@#{annot.annotation_content}$-$"
+    end
+    @all_annotation_string = @all_annotation_string.gsub(/\R+/, ' ')
+
+
     #==================================================================
     #DO NOT ALLOW TO READ IF NOT GRANTED PRIVILEGE
     #DO NOT LINK TO EDIT IF NOT GRANTED PRIVILEGE
@@ -91,6 +97,7 @@ class PassagesController < ApplicationController
 
   # GET /passages/new
   def new
+    @isCreation = true
     @current_user = current_user
     @passage = Passage.new
   end
@@ -118,6 +125,12 @@ class PassagesController < ApplicationController
     @isCreation = true
     @current_user = current_user
     @passage = Passage.new(passage_params.except(:annotation_code))
+
+    puts "-------"
+    puts "-------"
+    puts "-------"
+    puts @isCreation
+    puts "-------"
 
     respond_to do |format|
       if @passage.save
@@ -150,6 +163,7 @@ class PassagesController < ApplicationController
   # PATCH/PUT /passages/1
   # PATCH/PUT /passages/1.json
   def update
+    @isCreation = false
     respond_to do |format|
       if @passage.update(passage_params.except(:annotation_code))
         @proceed = true

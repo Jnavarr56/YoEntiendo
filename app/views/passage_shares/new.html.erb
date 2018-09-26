@@ -1,14 +1,29 @@
 
-<%= link_to('Logout', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure you want to log out? You will lose unsaved work.' }) %>
+<nav id = "dashboardNav"> 
+<div>
+<%= link_to('Dashboard', "/") %> 
+<h1>|</h1>
+<%= link_to('Passages', passages_path) %> 
+<h1>|</h1>
+<%= link_to('Annotations', annotations_path) %>
+<h1>|</h1>
+</div>
+<div>
+  <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+  <h1> | </h1>
+  <%= mail_to "yoentiendo@gmail.com", "Contact"%>
+</div>
+</nav>
 
 <br>
 <br>
 
-
-<h1>New Passage Share</h1>
+<section id = "newShareSection">
+<h1 class = "boxTables">New Passage Share</h1>
 
 <%= render 'form', passage_share: @passage_share %>
 
 <br>
 
 <%= link_to 'Cancel', passage_shares_path, data: { confirm: 'Are you sure you want to log out? You will lose unsaved work.' } %>
+</section>

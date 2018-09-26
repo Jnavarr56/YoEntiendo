@@ -1,60 +1,77 @@
-<p id="notice"><%= notice %></p>
-
-<%= link_to "Dashboard", authenticated_root_path %> |
-<%= link_to('Annotations', annotations_path) %> |
-<%= link_to('Collaborate', passage_shares_path) %> |
-<%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+<nav id = "dashboardNav"> 
+  <div>
+  <%= link_to('Dashboard', "/") %> 
+  <h1>|</h1>
+  <%= link_to('Annotations', annotations_path) %>
+  <h1>|</h1>
+  <%= link_to "Collaborate [#{PassageShare.where(["recieving_user_id = ? and opened = ?", @current_user.id, false]).length}]", passage_shares_path %>
+  <h1>|</h1>
+  </div>
+  <div>
+    <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+    <h1> | </h1>
+    <%= mail_to "yoentiendo@gmail.com", "Contact"%>
+  </div>
+</nav>
 
 <br>
 <br>
 <br>
-<%= link_to 'Create a New Passage', new_passage_path %> 
+
 <br>
 
 
-<h1>Your Passages</h1>
 
-<table>
+<div id = "headerHolderPassages">
+  <h1 id = "yourPassages">Your Passages</h1>
+  <div>
+  <%= link_to 'Create a New Passage', new_passage_path %>
+  <input id = "searchPassages1"  class ="fuzzy-search" placeholder = "search for existing passages">
+  </div>
+</div>
+
+
+
+<div  id = "tableForList">
+
+<table  id = "passagesTableIndex">
   <thead>
     <tr>
-      <th>Title</th>
-      <th>Author</th>
-      <th>Created</th>
-      <th>Last Update</th>
-      <th>Updated By</th>
-      <th colspan="1"></th>
+      <th class = "sort" data-sort = "title">Title</th>
+      <th class = "sort"data-sort = "author">Author</th>
+      <th class = "sort"data-sort = "date">Created</th>
+      <th class = "sort"data-sort = "dateUpdate">Last Update</th>
+      <th class = "sort"data-sort = "latUpdater">Updated By</th>
+      <th class = "sort"colspan="1"></th>
     </tr>
   </thead>
 
-  <tbody>
+  <tbody class = "list">
 
     <% @total_passages.each do |passage| %>
       
-      <tr>
-        <td><%= passage.title %></td>
+      <tr class= "passageRow" data-passage-link = "/passages/<%="#{passage.id}"%>">
+        <td class = "title"><%= passage.title %></td>
 
         <% if @current_user.id === passage.user_id %>
-          <td><%= "You" %></td>
+          <td class = "author"><%= "You" %></td>
         <% else %>
-          <td><%= @users_affilation[passage.id].email %></td>
+          <td class = "author"><%= @users_affilation[passage.id].email %></td>
         <% end %>
     
-        <td><%= passage.created_at.strftime("%m/%d/%Y %l:%M %P") %></td>
-        <td><%= @update_history[passage.id].created_at.strftime("%m/%d/%Y %l:%M %P") %></td>
+        <td class = "date"><%= passage.created_at.strftime("%m/%d/%Y %l:%M %P") %></td>
+        <td class = "dateUpdate"><%= @update_history[passage.id].created_at.strftime("%m/%d/%Y %l:%M %P") %></td>
         
         <% if @current_user.id === @users_affilation[passage.id].id %>
-          <td><%= "You" %></td>
+          <td class = "lastUpdater"><%= "You" %></td>
         <% else %>
           <td><%= @users_affilation[passage.id].email %></td>
         <% end %>
-
-      
-        <td><%= link_to 'Open', passage %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
+</div>
 
 <br>
 

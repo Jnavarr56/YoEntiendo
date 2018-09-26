@@ -1,4 +1,43 @@
-<%= link_to('Logout', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure you want to log out? You will lose unsaved work.' }) %>
+<nav id = "profileNav" class = "passageCreateButtons"> 
+  <div>
+  <button id = "save">save</button>
+  <h1 style = "opacity: 0;">|</h1>
+  <button id = "undo">&#8678;</button> 
+  <h1 style = "opacity: 0;">|</h1>
+  <button id = "redo">&#8680;</button>
+  <h1 style = "opacity: 0;">|</h1>
+  <input type="color" id="colors" name="color" pattern="^#+([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$" value="#bada55"> 
+  <h1 style = "opacity: 0;">|</h1>
+  <button style = "display: none;" id = "deleteAnnotation">Delete Annotation</button>
+  <h1 style = "opacity: 0;">|</h1>
+  <button style = "display: none;" id = "editAnnotation">Edit Annotation</button>
+  <h1 style = "opacity: 0;">|</h1>
+  <button style = "display: none;" id = "cancelEditAnnotation">Cancel Annotation</button>
+  <h1 style = "opacity: 0;">|</h1>
+  <button id = "manualBindButton">Create Annotation</button> 
+  <h1 style = "opacity: 0;">|</h1>
+  <button id = "clearSelection">Clear</button>
+  <h1 style = "opacity: 0;">|</h1>
+  <button id = "returnSelectionButton">Return</button> 
+  <h1 style = "opacity: 0;">|</h1>
+  <button id = "entiendifyButton">Get Translation</button>
+  <h1 style = "opacity: 0;">|</h1>
+  <textarea style = "width: 300px; height: 10px;" id = "articleTitle" placeholder = "    title"></textarea>
+  <h1 style = "opacity: 0;">|</h1>
+  <textarea style = "width: 300px; height: 10px;" id = "articleInput" placeholder = "    article"></textarea>
+  <h1 style = "opacity: 0;">|</h1>
+  <button style = "display: block;" id = "convertArticleButton">Process Article</button>
+  </div>
+
+
+  <div class = "slightlyLarger">
+    <%= link_to 'Exit', passages_path, data: { confirm: 'Are you sure you want to leave? You will lose unsaved work.' }%> 
+    <h1> | </h1>
+    <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+    <h1> | </h1>
+    <%= mail_to "yoentiendo@gmail.com", "Contact"%>
+  </div>
+</nav>
 
 
 <br>
@@ -6,12 +45,39 @@
 <br>
 <br>
 
-<h1>New Passage</h1>
+<div id = "topButtonsHolder">
+</div>
 
+<div id = "articleOutput"></div>
+
+<section id = "editing">
+</section>
+
+<div id = "bottomCreatePassage">
+    <div id = "selectSec" class = "mod">
+        <h3>Selected:</h3>
+        <div>
+        <p class = "empty" id = "selectedText"></p> 
+        </div>
+    </div>
+    <div style = "display: none;" id = "assignSec" class = "mod">
+        <h3>Auto Assign Info:</h3>
+        <p class = "empty" id = "translationInfo"></p>
+        <button id = "transferButton">Transfer</button> 
+    </div>
+    <div id = "manualInfo" class = "mod">
+    <textarea class = "empty" id = "manualArea"><p></p></textarea>
+    </div>
+</div>
+
+
+<div style = "display: none;">
 <%= render 'form', passage: @passage %>
+</div>
 
-<br>
 
-<%= link_to 'Cancel', passages_path, data: { confirm: 'Are you sure you want to cancel? You will lose unsaved work.' }%> 
 
+<div id = "infoDisplay" style = "display: none;" >
+<p></p>
+</div>
 

@@ -1,10 +1,18 @@
-<p id="notice"><%= notice %></p>
-
-<%= link_to 'Back', url_for(:back) %>|
-<%= link_to "Dashboard", authenticated_root_path %> |
-<%= link_to('Passages', passages_path) %> |
-<%= link_to('Collaborate', passage_shares_path) %> |
-<%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+<nav id = "dashboardNav"> 
+  <div>
+  <%= link_to('Dashboard', "/") %> 
+  <h1>|</h1>
+  <%= link_to('Passages', passages_path) %> 
+  <h1>|</h1>
+  <%= link_to "Collaborate [#{PassageShare.where(["recieving_user_id = ? and opened = ?", @current_user.id, false]).length}]", passage_shares_path %>
+  </div>
+  
+  <div>
+    <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+    <h1> | </h1>
+    <%= mail_to "yoentiendo@gmail.com", "Contact"%>
+  </div>
+</nav>
 
 <br>
 <br>
@@ -12,15 +20,14 @@
 <td><%= link_to 'Open in Editor Mode', edit_annotation_path(@annotation) %></td>
 <br>
 
+<h2<%= link_to passage_path(@passage) do %></h2>
+<h2 class ="boxTables"><%= @passage.title %></h2>
+<% end %>
+<h2 class ="boxTables">Original Text</h2>
+<p class ="boxTables"><%= @annotation.original_spanish %></p>
 
-<h2>Passage</h2>
-<h5><%= @passage.title %></h5>
-
-<h2>Original Text</h2>
-<p><%= @annotation.original_spanish %></p>
-
-<h2>Annotation</h2>
-<p><%= @annotation.annotation_content %></p>
+<h2 class ="boxTables">Annotation</h2>
+<div class = "boxTables"><%= raw @annotation.annotation_content %></div>
 
 
 

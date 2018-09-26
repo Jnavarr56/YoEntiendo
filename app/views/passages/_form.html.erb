@@ -17,11 +17,6 @@
     <% else %>
       <%= hidden_field(:passage, :user_id, :value => @passage.user_id) %>
     <% end %>
-    
-  </div>
-
-  <div class="field">
-    <%= hidden_field(:passage, :annotation_code, :value => '') %>
   </div>
 
   <div class="field">
@@ -34,7 +29,13 @@
     <%= form.text_field :content %>
   </div>
 
+  <div class="field">
+    <%= form.label :annotation_code %>
+    <%= form.text_area :annotation_code, :id => "annotation_code" %>
+  </div>
+
+
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit :id => "finalize" %>
   </div>
 <% end %>

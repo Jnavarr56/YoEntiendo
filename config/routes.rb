@@ -6,10 +6,15 @@ Rails.application.routes.draw do
   resources :passage_shares
   resources :passages
 
-  get 'update_track/:id' => 'update_tracks#show'
-
+  
+  get '/update_track/:id' => 'update_tracks#show'
+  get '/user' => 'home#show'
   #devise_for :users, controllers: { confirmations: "confirmations", sessions: 'sessions' } 
-  devise_for :users, controllers: { confirmations: "confirmations"}
+
+  devise_for :users
+
+  
+
 
 
 

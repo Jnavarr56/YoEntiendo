@@ -1,3 +1,15 @@
+<nav id = "signUpNav"> 
+  <div>
+  <a href = "https://github.com/Jnavarr56"><img src = "https://cdn.freebiesupply.com/logos/large/2x/github-icon-logo-png-transparent.png" ></a>
+  <h1> | </h1>
+  <%= link_to "Back to Log in", new_session_path(resource_name) %><br />   
+  </div>
+  <div>
+    <%= mail_to "yoentiendo@gmail.com", "Contact"%>
+  </div>
+</nav>
+
+<section id = "signUp">
 <h2>Sign up</h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
@@ -36,4 +48,5 @@
   </div>
 <% end %>
 
-<%= render "devise/shared/links" %>
+<%= link_to "Didn't receive account confirmation instructions?", new_confirmation_path(resource_name) %><br />
+</section>
